@@ -120,6 +120,7 @@
 @section('scripts')
     
     <script>
+
         $(document).ready(function () {
 
             fetchStudent();
@@ -145,6 +146,54 @@
                     }
                 });
             } 
+
+            $(document).on('click', '.deletebtn', function (e) {
+                e.preventDefault();
+
+                var id = $('.deletebtn').val();
+
+                console.log(id);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                
+                
+                $.ajax({
+                    type: "DELETE",
+                    url: "/delete-student/" + id,
+                    dataType: "json",
+                    success: function (response) {
+                        swal({
+                            title: "Você está certo disso?",
+                            text: "Uma vez deletado, você não terá como recuperar a informação!",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: true,
+                        })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                swal("Feito! Cadastro deletado com sucesso! ", {
+                                icon: "success",
+                                });
+                                if (response.status == 404) {
+                                    $('#success_message').text(response.message);
+                                } else {
+                                    $('tbody').html("");
+                                    fetchStudent();
+                                }
+                            } else {
+                                swal("Seu Cadastro está a salvo!");
+                            }
+                        });
+
+                    }
+                });
+
+            });
+
 
             $(document).on('click', '.update_student', function (e) {
                 e.preventDefault();
@@ -177,9 +226,15 @@
                                 $('#update_msgList').append('<li>' + err_value + '</li>');
                             });
                         } else {
+
+                            swal({
+                            title: "Feito",
+                            text: "Registro atualizado com sucesso!",
+                            icon: "success",
+                            button: "fechar",
+                            });
+
                             $('#update_msgList').html("");
-                            $('#success_message').addClass('alert alert-success');
-                            $('#success_message').text(response.message);
                             $('#EditStudentModal').find('input').val('');
                             $('.update_student').text('Update');
                             $('#EditStudentModal').modal('hide');
@@ -249,9 +304,13 @@
                         });
                         $('.add_student').text('Save');
                         } else {
+                            swal({
+                            title: "Feito",
+                            text: "Cadastro realizado com sucesso!",
+                            icon: "success",
+                            button: "fechar",
+                            });
                             $('#save_msgList').html("");
-                            $('#success_message').addClass('alert alert-success');
-                            $('#success_message').text(response.message).fadeIn();
                             $('#AddStudentModal').find('input').val('');
                             $('.add_student').text('Save');
                             $('#AddStudentModal').modal('hide');

@@ -43,8 +43,6 @@ class StudentController extends Controller
 
         $student = Student::find($id);
 
-
-
         if($student) {
            
             $student->name = $request->input('name');
@@ -60,6 +58,22 @@ class StudentController extends Controller
             return response()->json(['status' => 404, 'message' => 'Student Not Found']);
         }
         
+    }
+
+    public function deleteStudents($id)
+    {
+        $student = Student::find($id);
+
+        if($student) {
+           
+            $student->delete();
+
+            return response()->json(['status' => 200, 'message' => 'Student Deleted Successfully']);
+
+        } else {
+
+            return response()->json(['status' => 404, 'message' => 'Student Not Found']);
+        }
     }
 
     public function fetchStudents()
