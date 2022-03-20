@@ -20,7 +20,9 @@ Route::get('/', function () {
 
 Route::get('/student', [App\Http\Controllers\StudentController::class, 'index'])->name('student-dashboard');
 Route::post('/create-student', [App\Http\Controllers\StudentController::class, 'store'])->name('create-student');
-Route::get('/fetch-student', [App\Http\Controllers\StudentController::class, 'store'])->name('fetch-student');
+Route::get('/fetch-students', [App\Http\Controllers\StudentController::class, 'fetchStudents'])->name('fetch-students');
+Route::get('/edit-students/{id}', [App\Http\Controllers\StudentController::class, 'editStudents'])->name('edit-students');
+Route::put('/update-students/{id}', [App\Http\Controllers\StudentController::class, 'updateStudents'])->name('update-students');
 
 Auth::routes();
 
