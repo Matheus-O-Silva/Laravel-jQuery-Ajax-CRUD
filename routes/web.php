@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DisciplineController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,13 +18,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/disciplines', [App\Http\Controllers\StudentController::class, 'index'])->name('discipline-dashboard');
-Route::post('/create-student', [App\Http\Controllers\StudentController::class, 'store'])->name('create-student');
-Route::get('/fetch-students', [App\Http\Controllers\StudentController::class, 'fetchStudents'])->name('fetch-students');
-Route::get('/edit-students/{id}', [App\Http\Controllers\StudentController::class, 'editStudents'])->name('edit-students');
-Route::put('/update-students/{id}', [App\Http\Controllers\StudentController::class, 'updateStudents'])->name('update-students');
-Route::delete('/delete-student/{id}', [App\Http\Controllers\StudentController::class, 'deleteStudents'])->name('delete-students');
+Route::middleware(['auth'])->group(function () {
+Route::get('/disciplines', [App\Http\Controllers\DisciplineController::class, 'index'])->name('discipline-dashboard');
+Route::post('/create-discipline', [App\Http\Controllers\DisciplineController::class, 'store'])->name('create-discipline');
+Route::get('/fetch-disciplines', [App\Http\Controllers\DisciplineController::class, 'fetchDisciplines'])->name('fetch-disciplines');
+Route::get('/edit-disciplines/{id}', [App\Http\Controllers\DisciplineController::class, 'editDisciplines'])->name('edit-disciplines');
+Route::put('/update-disciplines/{id}', [App\Http\Controllers\DisciplineController::class, 'updateDiscipline'])->name('update-disciplines');
+Route::delete('/delete-discipline/{id}', [App\Http\Controllers\DisciplineController::class, 'deleteDiscipline'])->name('delete-discipline');
+
+});
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

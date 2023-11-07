@@ -47,18 +47,6 @@
               <label for="Student Name"> Nome</label>
               <input type="text" id="edit_name" class="name form-control">
           </div>
-          <div class="form-group mb-3">
-              <label for="Student Name">Email</label>
-              <input type="text" id="edit_email" class="email form-control">
-          </div>
-          <div class="form-group mb-3">
-              <label for="Student Name">Phone</label>
-              <input type="text" id="edit_phone" class="phone form-control">
-          </div>
-          <div class="form-group mb-3">
-              <label for="Student Name">Course</label>
-              <input type="text" id="edit_course" class="course form-control">
-          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -113,19 +101,15 @@
             function fetchStudent() {
                 $.ajax({
                     type: "GET",
-                    url: "/fetch-students",
+                    url: "/fetch-disciplines",
                     dataType: "Json",
                     success: function (response) {
-                        $.each(response.students , function (key, item) {
+                        $.each(response.disciplines , function (key, item) {
                              $('tbody').append('<tr>\
                                     <td>' +item.id +'</td>\
                                     <td>' + item.name + '</td>\
-                                    <td>' + item.email + '</td>\
-                                    <td>' + item.phone + '</td>\
-                                    <td>' + item.course + '</td>\
-                                    <td>as</td>\
-                                    <td><button type="button" value="' + item.id + '" class="btn btn-primary edit_student btn-sm">Edit</button></td>\
-                                    <td><button type="button" value="' + item.id + '" class="btn btn-danger  deletebtn btn-sm">Delete</button></td>\
+                                    <td><button type="button" value="' + item.id + '" class="btn btn-primary edit_student btn-sm">Editar</button></td>\
+                                    <td><button type="button" value="' + item.id + '" class="btn btn-danger  deletebtn btn-sm">Deletar</button></td>\
                                 </tr>');
                         });
                     }
@@ -148,7 +132,7 @@
 
                 $.ajax({
                     type: "DELETE",
-                    url: "/delete-student/" + id,
+                    url: "/delete-discipline/" + id,
                     dataType: "json",
                     success: function (response) {
                         swal({
@@ -186,9 +170,6 @@
 
                 var data = {
                     'name' : $('#edit_name').val(),
-                    'email' : $('#edit_email').val(),
-                    'phone' : $('#edit_phone').val(),
-                    'course' : $('#edit_course').val(),
                 }
 
                 $.ajaxSetup({
@@ -199,7 +180,7 @@
 
                 $.ajax({
                     type: "PUT",
-                    url: "update-students/"+stud_id,
+                    url: "update-disciplines/"+stud_id,
                     data: data,
                     dataType: "json",
                     success: function (response) {
@@ -221,7 +202,7 @@
 
                             $('#update_msgList').html("");
                             $('#EditStudentModal').find('input').val('');
-                            $('.update_student').text('Update');
+                            $('.update_student').text('Atualizar');
                             $('#EditStudentModal').modal('hide');
                             fetchStudent();
                         }
@@ -238,7 +219,7 @@
 
                 $.ajax({
                     type: "GET",
-                    url: "/edit-students/"+stud_id,
+                    url: "/edit-disciplines/"+stud_id,
                     dataType: "json",
                     success: function (response) {
                         if (response.status == 404) {
@@ -247,9 +228,6 @@
                             $('#success_message').text(response.message);
                         } else {
                             $('#edit_name').val(response.student.name);
-                            $('#edit_course').val(response.student.course);
-                            $('#edit_email').val(response.student.email);
-                            $('#edit_phone').val(response.student.phone);
                             $('#stud_id').val(stud_id);
                         }
                     }
@@ -263,9 +241,6 @@
                 e.preventDefault();
                 var data = {
                     'name'   : $('.name').val(),
-                    'email'  : $('.email').val(),
-                    'phone'  : $('.phone').val(),
-                    'course' : $('.course').val(),
                 }
 
                 $.ajaxSetup({
@@ -276,7 +251,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "/create-student",
+                    url: "/create-discipline",
                     data: data,
                     dataType: "json",
                     success: function (response) {
@@ -297,14 +272,13 @@
                             });
                             $('#save_msgList').html("");
                             $('#AddStudentModal').find('input').val('');
-                            $('.add_student').text('Save');
+                            $('.add_student').text('Salvar');
                             $('#AddStudentModal').modal('hide');
                             fetchStudent();
                         }
-                }
+                    }
                 });
 
-                //console.log(data)
             });
 
         });
