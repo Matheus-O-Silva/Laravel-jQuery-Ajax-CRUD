@@ -7,7 +7,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Add Student</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Adicionar Disciplina</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -15,25 +15,13 @@
           <div id="save_msgList"></div>
 
           <div class="form-group mb-3">
-              <label for="Student Name"> Name</label>
+              <label for="Student Name"> Nome</label>
               <input type="text" class="name form-control">
-          </div>
-          <div class="form-group mb-3">
-              <label for="Student Name">Email</label>
-              <input type="text" class="email form-control">
-          </div>
-          <div class="form-group mb-3">
-              <label for="Student Name">Phone</label>
-              <input type="text" class="phone form-control">
-          </div>
-          <div class="form-group mb-3">
-              <label for="Student Name">Course</label>
-              <input type="text" class="course form-control">
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary add_student">Save</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-primary add_student">Salvar</button>
         </div>
       </div>
     </div>
@@ -46,7 +34,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Edit Student</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Editar Disciplina</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -56,7 +44,7 @@
             <input type="hidden" id="stud_id" />
 
           <div class="form-group mb-3">
-              <label for="Student Name"> Name</label>
+              <label for="Student Name"> Nome</label>
               <input type="text" id="edit_name" class="name form-control">
           </div>
           <div class="form-group mb-3">
@@ -73,8 +61,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary update_student">Update</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-primary update_student">Atualizar</button>
         </div>
       </div>
     </div>
@@ -89,20 +77,17 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h4>Students Data</h4>
-                    <a href="" class="btn btn-primary float-end btn-sm" data-bs-toggle="modal" data-bs-target="#AddStudentModal"> Add Student</a>
+                    <h4>Disciplinas</h4>
+                    <a href="" class="btn btn-primary float-end btn-sm" data-bs-toggle="modal" data-bs-target="#AddStudentModal"> Adicionar Disciplina</a>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Course</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
+                                <th>Nome</th>
+                                <th>Editar</th>
+                                <th>Deletar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -118,7 +103,7 @@
 @endsection
 
 @section('scripts')
-    
+
     <script>
 
         $(document).ready(function () {
@@ -131,7 +116,7 @@
                     url: "/fetch-students",
                     dataType: "Json",
                     success: function (response) {
-                        $.each(response.students , function (key, item) { 
+                        $.each(response.students , function (key, item) {
                              $('tbody').append('<tr>\
                                     <td>' +item.id +'</td>\
                                     <td>' + item.name + '</td>\
@@ -145,7 +130,7 @@
                         });
                     }
                 });
-            } 
+            }
 
             $(document).on('click', '.deletebtn', function (e) {
                 e.preventDefault();
@@ -159,8 +144,8 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
-                
-                
+
+
                 $.ajax({
                     type: "DELETE",
                     url: "/delete-student/" + id,
@@ -239,7 +224,7 @@
                             $('.update_student').text('Update');
                             $('#EditStudentModal').modal('hide');
                             fetchStudent();
-                        }                       
+                        }
 
 
                     }
@@ -273,7 +258,7 @@
                 $('.btn-close').find('input').val('');
 
             });
-            
+
             $(document).on('click', '.add_student', function (e) {
                 e.preventDefault();
                 var data = {

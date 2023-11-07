@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/student', [App\Http\Controllers\StudentController::class, 'index'])->name('student-dashboard');
+Route::get('/disciplines', [App\Http\Controllers\StudentController::class, 'index'])->name('discipline-dashboard');
 Route::post('/create-student', [App\Http\Controllers\StudentController::class, 'store'])->name('create-student');
 Route::get('/fetch-students', [App\Http\Controllers\StudentController::class, 'fetchStudents'])->name('fetch-students');
 Route::get('/edit-students/{id}', [App\Http\Controllers\StudentController::class, 'editStudents'])->name('edit-students');
